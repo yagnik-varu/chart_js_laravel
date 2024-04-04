@@ -15,3 +15,6 @@ Route::get('/chart/month', [ChartController::class,'chartMonthView'])->name('cha
 Route::get('/chart/month/data', [ChartController::class,'chartMonthData'])->name('chart.month.data');
 Route::get('/chart/month/sport/data', [ChartController::class,'chartMonthSportData'])->name('chart.month.sport.data');
 Route::get('getData/from/author/{author}',[ChartController::class,'allData'] )->name('allData');
+Route::get('/chart/yearMonth',[ChartController::class,'yearMonthView'])->name('chart.yearMonth.view');
+Route::get('/chart/yearMonth/data',[ChartController::class,'yearMonthData'])->name('chart.yearMonth.data');
+Route::get('/date/sport/data',[ChartController::class,'specificDateSportData'])->name('date.sport.data');

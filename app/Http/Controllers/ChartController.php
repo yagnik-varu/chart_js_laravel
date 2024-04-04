@@ -201,6 +201,43 @@ class ChartController extends Controller
         }
     }
 
+    public function yearMonthView(){
+        $years = Asset::selectRaw('YEAR(published_date) as published_year')->whereNotNull('published_date')->groupBy('published_year')->get();
+        $months = Asset::selectRaw('Month(published_date) as published_month')->whereNotNull('published_date')->groupBy('published_month')->orderBy('published_month')->pluck('published_month')->toArray();
+        $monthName = [];
+        foreach($months as $month){
+            $monthName[$month] = Carbon::create()->month($month)->format('F'); 
+        }
+        return view('yearMonth', compact('years','monthName'));
+    }
+
+    public function yearMonthData(Request $request){
+        $data = Asset::selectRaw('count(*) as total,YEAR(published_date) as published_year,Month(published_date) as published_month,Date(published_date) as Date')->whereNotNull('published_date')->whereNotNull('sport')->groupBy('published_year','published_month','Date',);
+        // dd($data);
+        // if(($request->has('year')) && ($request->year != 'all')){
+            $data = $data->where(function ($query) use ($request) {
+                $query->whereYear('published_date', $request->year);    
+            });
+            $data = $data->where(function ($query) use ($request) {
+                $query->whereMonth('published_date', $request->month)->get();    
+            });
+            // $title = $title.' '.$request->year;
+        // };
+        $label = $data->pluck('Date')->toArray();
+        $value = $data->pluck('total')->toArray();
+        // return $data->get();
+        // return $request->all();
+        return response()->json(["status"=>"success","label"=>$label,"value"=>$value]);
+    }
+
+    public function specificDateSportData(Request $request){
+        $data = Asset::whereDate('published_date', $request->date)->selectRaw('sport,count(*) as total')->groupBy('sport')->get();
+        $label = $data->pluck('sport')->toArray();
+        $value = $data->pluck('total')->toArray();
+        $title = "Blog Published on date ".$request->date;
+        return response()->json(["status"=>"success","label"=>$label,"value"=>$value,"title"=>$title]);
+    }
+
    
    
     

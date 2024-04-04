@@ -76,23 +76,24 @@
 			class="navbar-brand fs-1 ms-5 me-5"> Charts
 			</a><hr> 
 			
-			<ul class="mynav nav nav-pills flex-column text-center"> 
+			<ul class="mynav nav nav-pills flex-column "> 
+				<li class="nav-item mb-1"> 
+					<a href="{{route('chart.yearMonth.view')}}"> 
+						<i class="fa-solid fa-chart-simple"></i> 
+						Chart
+					</a> 
+				</li> 
 				<li class="nav-item mb-1"> 
 					<a href="{{route('chart.index')}}"> 
 						<i class="fa-regular fa-user"></i> 
-						By Author
+						Author
 					</a> 
 				</li> 
 				<li class="nav-item mb-1"> 
 					<a href="{{route('chart.year.view')}}"> 
-						<i class="fa-regular fa-user"></i> 
-						By year comparison
-					</a> 
-				</li> 
-				<li class="nav-item mb-1"> 
-					<a href="{{route('chart.month.view')}}"> 
-						<i class="fa-regular fa-user"></i> 
-						By month
+						{{-- <i class="fa-regular fa-user"></i>  --}}
+						<i class="fa-solid fa-code-compare"></i>
+						Compare Yearly
 					</a> 
 				</li> 
 
